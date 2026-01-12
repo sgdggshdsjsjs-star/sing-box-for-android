@@ -26,11 +26,26 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Locale
 import io.nekohasekai.sfa.Application as BoxApplication
+import java.io.InputStream
 
 class Application : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         application = this
+    }
+    private fun copyConfigFromAssets() {
+    try {
+        val targetFile = File(getExternalFilesDir(null), "config.json")
+        if (targetFile.exists()) return
+
+        assets.open("config.json").use { input ->
+            targetFile.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
     }
 
     override fun onCreate() {
@@ -44,6 +59,7 @@ class Application : Application() {
         @Suppress("OPT_IN_USAGE")
         GlobalScope.launch(Dispatchers.IO) {
             initialize()
+            copyConfigFromAssets()
             UpdateProfileWork.reconfigureUpdater()
             HookModuleUpdateNotifier.sync(this@Application)
         }
