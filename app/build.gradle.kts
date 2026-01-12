@@ -55,6 +55,11 @@ fun getVersionProps(propName: String): String {
 }
 
 android {
+    variantFilter {
+        if (name.contains("legacy")) {
+            ignore = true
+        }
+    }
     namespace = "io.nekohasekai.sfa"
     compileSdk = 36
 
