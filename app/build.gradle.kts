@@ -55,11 +55,6 @@ fun getVersionProps(propName: String): String {
 }
 
 android {
-    variantFilter {
-        if (name.contains("legacy")) {
-            ignore = true
-        }
-    }
     namespace = "io.nekohasekai.sfa"
     compileSdk = 36
 
@@ -171,6 +166,15 @@ android {
             fileName = fileName.replace("-otherLegacy", "-legacy-android-5")
             fileName = fileName.replace("-other", "")
             output.outputFileName = fileName
+        }
+    }
+}
+
+androidComponents {
+    beforeVariants { variantBuilder ->
+        // Полностью отключаем legacy-варианты
+        if (variantBuilder.productFlavors.any { it.second == "otherLegacy" }) {
+            variantBuilder.enable = false
         }
     }
 }
