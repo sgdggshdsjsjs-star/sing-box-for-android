@@ -194,7 +194,7 @@ class MainActivity : ComponentActivity(), ServiceConnection.Callback {
 
         setContent {
             SFATheme {
-                SFAApp()
+                SimpleVpnScreen()
             }
         }
     }
@@ -1150,4 +1150,55 @@ class MainActivity : ComponentActivity(), ServiceConnection.Callback {
             },
         )
     }
+    @Composable
+fun SimpleVpnScreen() {
+    val status by remember { mutableStateOf(Status.Stopped) }
+
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "VPN",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            FloatingActionButton(
+                onClick = {
+                    if (currentServiceStatus == Status.Running) {
+                        connection.stop()
+                    } else {
+                        startService()
+                    }
+                },
+                modifier = Modifier.size(72.dp)
+            ) {
+                Icon(
+                    imageVector =
+                        if (currentServiceStatus == Status.Running)
+                            Icons.Default.Stop
+                        else
+                            Icons.Default.PlayArrow,
+                    contentDescription = null,
+                    modifier = Modifier.size(36.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text =
+                    if (currentServiceStatus == Status.Running)
+                        "Подключено"
+                    else
+                        "Отключено"
+            )
+        }
+    }
+}
 }
