@@ -1,0 +1,37 @@
+{
+  "log": {
+    "level": "warn"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "interface_name": "singtun0",
+      "inet4_address": "172.19.0.1/30",
+      "stack": "system",
+      "mtu": 9000
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "vless",
+      "tag": "proxy",
+      "server": "ru-cdn.ultima.foundation",
+      "server_port": 3443,
+      "uuid": "1f8cddd7-35b3-487f-a4d0-61b2280328ba",
+      "flow": "xtls-rprx-vision",
+      "tls": {
+        "enabled": true,
+        "server_name": "m.vk.ru",
+        "utls": {
+          "enabled": true,
+          "fingerprint": "edge"
+        },
+        "reality": {
+          "enabled": true,
+          "public_key": "FcZ6-LZS5HHqAJ8YwFV_Gu_WxrMuylqxYjBu-1CLVRI",
+          "short_id": ""
+        }
+      }
+    }
+  ]
+}
