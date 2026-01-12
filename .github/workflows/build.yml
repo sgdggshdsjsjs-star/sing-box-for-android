@@ -23,6 +23,13 @@ jobs:
       - name: Grant execute permission
         run: chmod +x gradlew
 
+        - name: Download libbox (prebuilt)
+          run: |
+           mkdir -p app/libs
+           curl -L \
+           -o app/libs/libbox.aar \
+           https://github.com/SagerNet/sing-box/releases/latest/download/libbox.aar
+
       - name: Build release APK
         run: ./gradlew assembleRelease
 
