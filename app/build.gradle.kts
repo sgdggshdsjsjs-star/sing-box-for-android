@@ -180,11 +180,7 @@ androidComponents {
 }
 
 dependencies {
-    // libbox
-    "playImplementation"(files("libs/libbox.aar"))
-    "otherImplementation"(files("libs/libbox.aar"))
-    "otherLegacyImplementation"(files("libs/libbox-legacy.aar"))
-
+    implementation("io.nekohasekai:libbox:1.9.0")
     // API level specific versions
     val lifecycleVersion23 = "2.10.0"
     val roomVersion23 = "2.8.4"
